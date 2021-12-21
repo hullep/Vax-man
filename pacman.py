@@ -2,6 +2,7 @@
 #https://github.com/hbokmann/Pacman
   
 import pygame._view
+import random
   
 black = (0,0,0)
 white = (255,255,255)
@@ -237,9 +238,9 @@ class Ghost(Player):
           self.change_x=self.directions[self.turn][0]
           self.change_y=self.directions[self.turn][1]
           self.steps = 0
-        return [self.turn,self.steps]
       except IndexError:
-         return [0,0]
+         self.turn = 0
+         self.steps = 0
     
     # Duplicate the current enemy and return the new instance
     def duplicate(self):
@@ -249,7 +250,7 @@ class Ghost(Player):
 
 DBLENEMY = pygame.USEREVENT + 1
 
-pygame.time.set_timer(DBLENEMY, 10000)
+pygame.time.set_timer(DBLENEMY, 30000)
 
 # Create enemy movements
 
@@ -306,7 +307,7 @@ Blinky_directions = [
 ]
 
 Inky_directions = [
-[30,0,2],
+[30,-15,2],
 [0,-15,4],
 [15,0,10],
 [0,15,7],
@@ -340,7 +341,7 @@ Inky_directions = [
 ]
 
 Clyde_directions = [
-[-30,0,2],
+[-30,-15,2],
 [0,-15,4],
 [15,0,5],
 [0,15,7],
@@ -508,9 +509,6 @@ def startGame():
       Pacman.update(wall_list,gate)
 
       for enemy in monsta_list:
-          returned = enemy.changespeed()
-          enemy.turn = returned[0]
-          enemy.steps = returned[1]
           enemy.changespeed()
           enemy.update(wall_list,False)
 
